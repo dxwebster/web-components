@@ -57,8 +57,31 @@ PokemonCardTemplate.innerHTML = `
 
 `;
 
+const texts = [
+  {
+    title: "Pikachua",
+    avatar: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
+    subtitle: "Esse é o pokemon mais famoso",
+    text: "O pikachu é amarelo e amigo do Ash",
+  },
+  {
+    title: "Zubat",
+    avatar: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
+    subtitle: "Esse é o pokemon é um morcego",
+    text: "O zubat é um morcego e esse é o texto falando sobre ele",
+  },
+  {
+    title: "Jigglypuff",
+    avatar: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
+    subtitle: "Pokemonzinho Rosa",
+    text: "Texto falando do jigglypuff, o pokemon rosa.",
+  },
+
+];
 
 
+const sectionCards = document.querySelector("container");
+const card = document.querySelector("poke-card");
 class PokeCard extends HTMLElement {
   constructor() {
     super();
@@ -66,21 +89,27 @@ class PokeCard extends HTMLElement {
     this.showInfo = true;
 
     // cria um encapsulamento com ShadowRoot e anexa o PokemonCardTemplate
-    this.attachShadow({ mode: 'open' }); 
-    this.shadowRoot.appendChild(PokemonCardTemplate.content.cloneNode(true));
+    const shadow = this.attachShadow({ mode: 'open' }); 
 
-    // Get nos atributos e coloca nas respectivas tags do template
-    const imageURL = this.getAttribute('avatar'); 
-    this.shadowRoot.querySelector('img').setAttribute('src', imageURL);
+    texts.map(item => {
+      
+      shadow.appendChild(PokemonCardTemplate.content.cloneNode(true));
+  
+      // Get nos atributos e coloca nas respectivas tags do template
+      // const imageURL = this.getAttribute('avatar'); 
+      shadow.querySelector('img').setAttribute('src', item.avatar);
+  
+      // const title = this.getAttribute('title'); 
+      shadow.querySelector('h2').innerText = item.title;
+  
+      // const subtitle = this.getAttribute('subtitle'); 
+      shadow.querySelector('h3').innerText = item.subtitle; 
+  
+      // const text = this.getAttribute('text'); 
+      shadow.querySelector('p').innerText = item.text; 
+    })
 
-    const title = this.getAttribute('title'); 
-    this.shadowRoot.querySelector('h2').innerText = title;
 
-    const subtitle = this.getAttribute('subtitle'); 
-    this.shadowRoot.querySelector('h3').innerText = subtitle; 
-
-    const text = this.getAttribute('text'); 
-    this.shadowRoot.querySelector('p').innerText = text; 
   }
 
   // funções para o toogle
