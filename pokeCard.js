@@ -59,20 +59,20 @@ PokemonCardTemplate.innerHTML = `
 
 const texts = [
   {
-    title: "Pikachua",
+    title: "Pikachu",
     avatar: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
     subtitle: "Esse é o pokemon mais famoso",
     text: "O pikachu é amarelo e amigo do Ash",
   },
   {
     title: "Zubat",
-    avatar: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
+    avatar: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/041.png",
     subtitle: "Esse é o pokemon é um morcego",
     text: "O zubat é um morcego e esse é o texto falando sobre ele",
   },
   {
     title: "Jigglypuff",
-    avatar: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png",
+    avatar: "https://assets.pokemon.com/assets/cms2/img/pokedex/full/035.png",
     subtitle: "Pokemonzinho Rosa",
     text: "Texto falando do jigglypuff, o pokemon rosa.",
   },
@@ -81,35 +81,23 @@ const texts = [
 
 
 const sectionCards = document.querySelector("container");
-const card = document.querySelector("poke-card");
 class PokeCard extends HTMLElement {
+  
   constructor() {
     super();
-
     this.showInfo = true;
 
-    // cria um encapsulamento com ShadowRoot e anexa o PokemonCardTemplate
+    // cria um encapsulamento com ShadowRoot
     const shadow = this.attachShadow({ mode: 'open' }); 
 
     texts.map(item => {
-      
-      shadow.appendChild(PokemonCardTemplate.content.cloneNode(true));
-  
-      // Get nos atributos e coloca nas respectivas tags do template
-      // const imageURL = this.getAttribute('avatar'); 
-      shadow.querySelector('img').setAttribute('src', item.avatar);
-  
-      // const title = this.getAttribute('title'); 
-      shadow.querySelector('h2').innerText = item.title;
-  
-      // const subtitle = this.getAttribute('subtitle'); 
-      shadow.querySelector('h3').innerText = item.subtitle; 
-  
-      // const text = this.getAttribute('text'); 
-      shadow.querySelector('p').innerText = item.text; 
+      const cardClone = PokemonCardTemplate.content.cloneNode(true)
+      cardClone.querySelector('img').setAttribute('src', item.avatar);
+      cardClone.querySelector('h2').innerText = item.title;
+      cardClone.querySelector('h3').innerText = item.subtitle;
+      cardClone.querySelector('p').innerText = item.text;
+      shadow.appendChild(cardClone);
     })
-
-
   }
 
   // funções para o toogle
@@ -138,6 +126,7 @@ class PokeCard extends HTMLElement {
     this.shadowRoot.querySelector('#toggle-info').removeEventListener();
   }
 }
+
 window.customElements.define('poke-card', PokeCard);
 
 
